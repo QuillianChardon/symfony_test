@@ -1,3 +1,10 @@
-#index:
-#    path: /
-#    controller: App\Controller\DefaultController::index
+index:
+    path: /
+    controller: App\Controller\TestController::index
+
+# test:
+#     path: /test/{age<\d+>?0}
+#     controller: App\Controller\TestController::test
+#     methods: [GET, POST]
+#     # host --> permet de definir depuis quel urls cette page est disponible
+#     # schemes --> defini si on l'appelle via http ou/et https
