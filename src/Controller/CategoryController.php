@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Category;
 use App\Form\CategoryType;
 use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -13,16 +14,33 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 
 class CategoryController extends AbstractController
 {
+    protected $categoryRepository;
+
+    public function __construct(CategoryRepository $categoryRepository)
+    {
+        $this->categoryRepository = $categoryRepository;
+    }
+
+    public function renderMenuList()
+    {
+        $category = $this->categoryRepository->findAll();
+
+        return $this->render('category/_menu.html.twig', [
+            'categories' => $category
+        ]);
+    }
+
     /**
      * @Route("/admin/category/create", name="category_create")
      */
     public function create(Request $request, SluggerInterface $slugger, EntityManagerInterface $em)
     {
-        $form = $this->createForm(CategoryType::class);
+        $category = new Category;
+        $form = $this->createForm(CategoryType::class, $category);
 
         $form->handleRequest($request);
-        if ($form->isSubmitted()) {
-            $category = $form->getData();
+
+        if ($form->isSubmitted() && $form->isValid()) {
             $category->setSlug(strtolower($slugger->slug($category->getName())));
 
             $em->persist($category);
@@ -47,11 +65,8 @@ class CategoryController extends AbstractController
         $form = $this->createForm(CategoryType::class, $category);
 
         $form->handleRequest($request);
-        if ($form->isSubmitted()) {
-            $category = $form->getData();
+        if ($form->isSubmitted() && $form->isValid()) {
             $category->setSlug(strtolower($slugger->slug($category->getName())));
-
-            $em->persist($category);
             $em->flush();
 
             return $this->redirectToRoute('product_category', [
