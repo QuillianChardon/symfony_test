@@ -22,12 +22,19 @@ class ProductType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name', TextType::class)
-            ->add('shortDescription', TextareaType::class)
-            ->add('price', PriceType::class)
+        $builder->add('name', TextType::class, [
+            'required' => false
+        ])
+            ->add('shortDescription', TextareaType::class, [
+                'required' => false
+            ])
+            ->add('price', PriceType::class, [
+                'required' => false
+            ])
             ->add('mainPicture', UrlType::class, [
                 'label' => 'Image du produit',
-                'attr' => ['placeholder' => 'tapez un url d\'image']
+                'attr' => ['placeholder' => 'tapez un url d\'image'],
+                'required' => false
             ])
             ->add('category', EntityType::class, [
                 'placeholder' => '-- Choisir une catégorie --',
