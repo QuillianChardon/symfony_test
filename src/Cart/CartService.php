@@ -41,6 +41,11 @@ class CartService
         }
         return $total;
     }
+
+    /**
+     * 
+     * @return CartItem[]
+     */
     public function getDetailedCartItems()
     {
         $detailCart = [];
@@ -88,5 +93,10 @@ class CartService
     protected function saveCart($cart)
     {
         $this->session->set('cart', $cart);
+    }
+
+    public function empty()
+    {
+        $this->saveCart([]);
     }
 }
