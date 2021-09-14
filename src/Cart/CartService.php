@@ -65,7 +65,6 @@ class CartService
     public function remove($id)
     {
         $cart = $this->getCart();
-
         unset($cart[$id]);
     }
 
@@ -81,6 +80,7 @@ class CartService
             $this->remove($id);
             return;
         }
+
         $cart[$id]--;
         $this->saveCart($cart);
     }
