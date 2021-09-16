@@ -27,6 +27,17 @@ class CartService
         $this->saveCart($cart);
     }
 
+    public function addQtt($id, $qtt)
+    {
+        $cart = $this->getCart();
+        if (array_key_exists($id, $cart)) {
+            $cart[$id] += $qtt;
+        } else {
+            $cart[$id] = $qtt;
+        }
+        $this->saveCart($cart);
+    }
+
     public function getTotal()
     {
         $total = 0;
@@ -66,6 +77,7 @@ class CartService
     {
         $cart = $this->getCart();
         unset($cart[$id]);
+        $this->saveCart($cart);
     }
 
     public function decrement($id)

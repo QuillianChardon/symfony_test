@@ -16,23 +16,27 @@
 			</ul>
 
 			<ul class="navbar-nav">
-				<li class="nav-item">
-					<a href="{{ path('cart_show')}}" class="nav-link">
+				<li class="nav-item ms-1">
+					<a href="{{ path('cart_show')}}" class="nav-link ">
 						<i class="fa fas-shopping-cart"></i>
-						Panier ({{ cartService.total }})</a>
+						Panier ({{ p.price | amount }})</a>
 				</li>
 				{% if app.user %}
-					<li class="nav-item">
-						<a href="{{ path('security_logout') }}" class="btn btn-danger">LogOut</a>
+					<li class="nav-item ms-1">
+						<a href="{{ path('purchase_index') }}" class="nav-link btn btn-info ">
+							<i class="fas fa-dolly-flatbed"></i>
+							mes commande</a>
 					</li>
-					<li class="nav-item">
-						<a href="" class="nav-link"></a>
+					<li class="nav-item ms-1">
+						<a href="{{ path('security_logout') }}" class="nav-link btn btn-danger text-white">
+							<i class="fas fa-sign-out-alt"></i>LogOut</a>
 					</li>
+
 				{% else %}
-					<li class="nav-item">
+					<li class="nav-item ms-1">
 						<a href="#" class="nav-link">Inscription</a>
 					</li>
-					<li class="nav-item">
+					<li class="nav-item ms-1">
 						<a href="{{ path('security_login') }}" class="btn btn-success">login</a>
 					</li>
 				{% endif %}

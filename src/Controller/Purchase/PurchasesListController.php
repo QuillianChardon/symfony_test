@@ -15,7 +15,7 @@ class PurchasesListController extends AbstractController
      * @Route("/purchases", name="purchase_index")
      * @IsGranted("ROLE_USER", message="vous devez être connecté")
      */
-    public function index(Security $security)
+    public function index()
     {
         // 1. Nous devons nous assurer que la personne est connectée (sinon page d'accueil) -> secutiry 
         /** @var User */

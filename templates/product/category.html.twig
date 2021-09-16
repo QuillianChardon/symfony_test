@@ -13,7 +13,16 @@
 		<li class="breadcrumb-item active">{{category.name}}</li>
 	</ol>
 	<h1>Catégorie :
-		{{category.name}}</h1>
+		{{category.name}}
+
+		{% if is_granted('ROLE_ADMIN') %}
+			<a class="btn btn-danger mb-3 float-r" href="{{ path('category_edit',{'id':category.id}) }}">
+				<i class="fas fa-wrench"></i>
+				Modifier</a>
+		{% endif %}
+
+	</h1>
+
 	<div class="row">
 		{% for p in category.products %}
 			<div class='col-3'>

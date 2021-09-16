@@ -15,6 +15,7 @@
 				<th>Date de commande</th>
 				<th>Produit</th>
 				<th>Total</th>
+				<th>Visualisation</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -42,6 +43,9 @@
 					</td>
 					<td>{{ p.total / 100 }}
 						€</td>
+					<td>
+						<a href="{{ path('view_purchase', {'id':p.id }) }}" class="btn btn-info">Visualiser</button>
+					</td>
 				</tr>
 			{% endfor %}
 		</tbody>
