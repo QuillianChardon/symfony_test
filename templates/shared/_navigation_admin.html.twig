@@ -1,0 +1,9 @@
+<h2>navigation</h2>
+<ul class="navigation">
+	{% for lien in liens %}
+		<li>
+			<a href="{{ path(lien[0])}}">
+				{{lien[1]}}</a>
+		</li>
+	{% endfor %}
+</ul>

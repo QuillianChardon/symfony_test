@@ -1,0 +1,199 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+	Page admin
+{% endblock %}
+
+{% block body %}
+	<h1>Stats</h1>
+
+	<ul class="nav nav-tabs" id="myTab" role="tablist">
+		<li class="nav-item" role="presentation">
+			<button class="nav-link active" id="produit-tab" data-bs-toggle="tab" data-bs-target="#produit" type="button" role="tab" aria-controls="home" aria-selected="true">Produit</button>
+		</li>
+		<li class="nav-item" role="presentation">
+			<button class="nav-link" id="category-tab" data-bs-toggle="tab" data-bs-target="#category" type="button" role="tab" aria-controls="category" aria-selected="false">Categorie</button>
+		</li>
+		<li class="nav-item" role="presentation">
+			<button class="nav-link" id="user-tab" data-bs-toggle="tab" data-bs-target="#user" type="button" role="tab" aria-controls="user" aria-selected="false">Utilisateur</button>
+		</li>
+		<li class="nav-item" role="presentation">
+			<button class="nav-link" id="order-tab" data-bs-toggle="tab" data-bs-target="#order" type="button" role="tab" aria-controls="order" aria-selected="false">Commande</button>
+		</li>
+	</ul>
+	<div class="tab-content" id="myTabContent">
+		<div class="tab-pane fade show active" id="produit" role="tabpanel" aria-labelledby="produit-tab">
+			<h3>Produit :
+			</h3>
+			<a href="{{ path('product_create') }}" class="btn btn-success">Création</a><br>
+			- Il y a
+			{{ nbProduct }}
+			produit sur le site
+			<br>
+			- Liste :
+			<table class="table table-striped" style="width:100%">
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Description</th>
+						<th>Id</th>
+						<th>Prix</th>
+						<th>Categories</th>
+						<th>Action</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for product in products %}
+						<tr data-bs-toggle="tooltip" data-bs-html="true" title="<img src='{{ product.mainPicture }}' class='tooltipImg'>">
+							<td>{{ product.name }}</td>
+							<td>{{ product.shortDescription }}</td>
+							<td>{{ product.id }}</td>
+							<td>{{ product.price /100}}</td>
+							<td>{{ product.category.name }}</td>
+							<td>
+								<a href="{{path('product_edit',{ 'id':product.id }) }}" class="btn btn-danger">modification
+								</button>
+							</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+		<div class="tab-pane fade" id="category" role="tabpanel" aria-labelledby="category-tab">
+			<h3>Categorie :
+			</h3>
+			<a href="{{ path('category_create') }}" class="btn btn-success">Création</a><br>
+			- Il y a
+			{{ nbCategory }}
+			categorie sur le site
+			<br>
+			- Liste :
+			<table class="table table-striped" style="width:100%">
+				<thead>
+					<tr>
+						<th>Id</th>
+						<th>Name</th>
+						<th>Nombre de produit</th>
+						<th>Action</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for categorie in categories %}
+						<tr>
+							<td>{{ categorie.id }}</td>
+							<td>{{ categorie.name }}</td>
+							<td>{{ nbProductByCategory[categorie.id] }}</td>
+							<td>
+								<a href="{{path('category_edit',{ 'id':categorie.id }) }}" class="btn btn-danger">modification
+								</button>
+							</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+		<div class="tab-pane fade" id="user" role="tabpanel" aria-labelledby="user-tab">
+			<h3>Utilisateur :
+			</h3>
+			- Il y a
+			{{ nbUser }}
+			utilisateur sur le site
+			<br>
+			- Liste :
+			<table class="table table-striped" style="width:100%">
+				<thead>
+					<tr>
+						<th>id</th>
+						<th>name</th>
+						<th>email</th>
+						<th>role</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for user in users %}
+						<tr data-bs-toggle="tooltip" data-bs-html="true" title="Commande :<br><ul>{% for purchase in user.purchases %}<li>{{purchase.total / 100 }}€ --> {{ purchase.address }}</li> {% endfor %}</ul>">
+							<td>{{ user.id }}</td>
+							<td>{{ user.fullName }}</td>
+							<td>{{ user.email }}</td>
+							<td>
+								<ul>
+									{% for role in usersRole[user.id] %}
+										<li>{{role}}</li>
+									{% endfor %}
+								</ul>
+							</td>
+
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+		<div class="tab-pane fade" id="order" role="tabpanel" aria-labelledby="order-tab">
+			<h3>Commande :
+			</h3>
+			- Il y a
+			{{ nbOrder }}
+			commande sur le site
+			<br>
+			- Liste :
+			<table class="table table-striped" style="width:100%">
+				<thead>
+					<tr>
+						<th>id</th>
+						<th>user</th>
+						<th>address</th>
+						<th>total</th>
+						{# <th>date</th> #}
+					</tr>
+				</thead>
+				<tbody>
+					{% for order in orders %}
+						<tr data-bs-toggle="tooltip" data-bs-html="true" title="Detail :<br><ul>{% for object in order.purchaseItems %}<li>{{ object.productName }} x {{ object.quantity }} --> {{ object.total /100 }}€ </li> {% endfor %}</ul>">
+							<td>{{ order.id }}</td>
+							<td>{{ order.fullName}}</td>
+							<td>{{ order.address }}<br>
+								{{  order.postalCode }}
+								{{  order.city }}</td>
+							<td>{{ order.total /100 }}€</td>
+							{# <td>{{ order.purchasedAt }}</td> #}
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+
+	<script>
+		document.addEventListener("DOMContentLoaded", function () {
+var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+return new bootstrap.Tooltip(tooltipTriggerEl)
+})
+$('.table.table-striped').DataTable({
+"lengthMenu": [
+[
+5,
+15,
+25,
+50,
+-1
+],
+[
+5,
+15,
+25,
+50,
+"All"
+]
+]
+});
+
+});
+	</script>
+{% endblock %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	<link rel="stylesheet" href="{{ asset('css/admin.css') }}">
+{% endblock %}

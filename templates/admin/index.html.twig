@@ -1,0 +1,16 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+	Page admin
+{% endblock %}
+
+{% block body %}
+	<h1>Page admin</h1>
+	{% include "shared/_navigation_admin.html.twig" %}
+
+{% endblock %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	<link rel="stylesheet" href="{{ asset('css/admin.css') }}">
+{% endblock %}

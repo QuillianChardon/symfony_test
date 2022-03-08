@@ -34,11 +34,6 @@ class HomeController extends AbstractController
                 $cpt++;
             }
         }
-        //requete de base (sql)
-        //select sum(quantity), product_id from purchase_item GROUP BY product_id ORDER BY `sum(quantity)` DESC limit 3
-
-        //requete en dql
-        // $dql = "SELECT SUM(pi.quantity), pi.product_id FROM App\Entity\PurchaseItem pi GROUP BY pi.product_id ORDER BY sum(pi.quantity) DESC";
 
         return $this->render('home.html.twig', [
             'products' => $products

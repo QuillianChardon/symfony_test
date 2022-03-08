@@ -1,0 +1,25 @@
+.navigation {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    list-style: none;
+}
+
+.nav-tabs>.nav-item>button {
+    border-color: #ecf0f1 #ecf0f1 #ecf0f1;
+    isolation: isolate;
+}
+
+.tab-pane.fade {
+    padding: 15px;
+    border: #dee2e6 1px solid;
+}
+
+.tooltipImg {
+    width: 250px;
+}
+
+.tooltip-inner {
+    max-width: unset;
+}
